@@ -156,7 +156,13 @@ AI_CV_ANALYZER/
 7. Se muestra el análisis y se habilita su descarga
 
 ---
+## 🖼️ Vista previa
 
+![Home](screenshots/img_1.png)
+![Resultado](screenshots/img_2.png)
+![Resultado](screenshots/img_3.png)
+![Resultado](screenshots/img_4.png)
+![Resultado](screenshots/img_5.png)
 ## 👨‍💻 Autor
 
 **Julio Solano**  
