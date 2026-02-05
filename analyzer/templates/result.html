@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados | AI CV Analyzer{% endblock %}
+
+{% block content %}
+<section>
+    <header class="text-center mb-5">
+        <h2 class="mb-2">📊 Resultado del Análisis</h2>
+        <span class="badge bg-info text-dark">
+            {{ analysis.get_target_position_display }}
+        </span>
+    </header>
+
+    <div class="row g-4">
+
+        <!-- Fortalezas -->
+        <article class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header text-success">💪 Fortalezas</div>
+                <div class="card-body d-flex flex-wrap gap-2">
+                    {% if analysis.result_json.strengths %}
+                        {% for item in analysis.result_json.strengths %}
+                            <span class="badge bg-success text-wrap">{{ item }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-secondary">Sin fortalezas detectadas.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
+        <!-- Errores -->
+        <article class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header text-danger">⚠️ Errores</div>
+                <div class="card-body">
+                    {% if analysis.result_json.errors %}
+                        <ul class="list-unstyled mb-0">
+                            {% for item in analysis.result_json.errors %}
+                                <li class="mb-2">• {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-secondary">No se detectaron errores.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
+        <!-- Sugerencias -->
+        <article class="col-md-4">
+            <div class="card h-100">
+                <div class="card-header text-warning">✨ Sugerencias</div>
+                <div class="card-body">
+                    {% if analysis.result_json.suggestions %}
+                        <ul class="list-unstyled mb-0">
+                            {% for item in analysis.result_json.suggestions %}
+                                <li class="mb-2">• {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-secondary">Sin sugerencias.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
+        <!-- Resumen ATS -->
+        <article class="col-12">
+            <div class="card">
+                <div class="card-header text-info">🧠 Resumen Optimizado (ATS)</div>
+                <div class="card-body">
+                    <div class="summary-box">
+                        {{ analysis.result_json.optimized_summary }}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="col-12 text-center mt-4">
+        <a href="/" class="btn btn-outline-light me-2">🔁 Nuevo análisis</a>
+        <a href="{% url 'download_summary' analysis.id %}" class="btn btn-outline-success">
+            ⬇️ Descargar resumen (PDF)
+        </a>
+</div>
+
+
+    </div>
+</section>
+{% endblock %}
+
+

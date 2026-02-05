@@ -1,0 +1,253 @@
+/* static/css/main.css - Propuesta extendida */
+
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary-color: #6c757d;
+    --success-color: #06d6a0;
+    --info-color: #118ab2;
+    --warning-color: #ffd166;
+    --danger-color: #ef476f;
+    --dark-color: #121826;
+    --darker-color: #0d1117;
+    --light-color: #f8f9fa;
+    --gray-800: #2d3748;
+    --gray-700: #4a5568;
+    --gray-600: #718096;
+    --gray-300: #e2e8f0;
+    
+    --border-radius: 12px;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --box-shadow-light: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estilos base mejorados */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--darker-color);
+    color: var(--light-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Mejoras en tipografía */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--light-color);
+}
+
+.display-5 {
+    background: linear-gradient(90deg, #4361ee, #3a0ca3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Gradientes profesionales */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-gradient-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(67, 97, 238, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Navegación mejorada */
+.navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin: 0 2px;
+}
+
+.nav-link.active {
+    background-color: rgba(67, 97, 238, 0.15);
+    color: var(--primary-color) !important;
+}
+
+.nav-link:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Cards y contenedores profesionales */
+.card {
+    background-color: var(--dark-color);
+    border: 1px solid var(--gray-800);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-light);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--box-shadow);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--gray-800);
+    padding: 1.25rem 1.5rem;
+}
+
+/* Botones mejorados */
+.btn {
+    border-radius: 8px;
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, var(--primary-dark), #2a4bc9);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Badges mejorados */
+.badge {
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+/* Formularios */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--gray-700);
+    color: var(--light-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+    color: var(--light-color);
+}
+
+.form-control::placeholder {
+    color: var(--gray-600);
+}
+
+/* Alertas */
+.alert {
+    border-radius: var(--border-radius);
+    border: none;
+    padding: 1rem 1.25rem;
+}
+
+.alert-dismissible .btn-close {
+    filter: invert(1) brightness(2);
+}
+
+/* Footer mejorado */
+footer {
+    margin-top: auto;
+}
+
+footer a {
+    transition: var(--transition);
+}
+
+footer a:hover {
+    color: var(--light-color) !important;
+    padding-left: 5px;
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Efectos de hover para tarjetas */
+.hover-lift {
+    transition: var(--transition);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 2.25rem;
+    }
+    
+    .lead {
+        font-size: 1.1rem;
+    }
+    
+    .card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Scrollbar personalizada (opcional) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-700);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-600);
+}

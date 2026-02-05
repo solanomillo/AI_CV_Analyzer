@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio | AI CV Analyzer{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="home-page"> <!-- WRAPPER PRINCIPAL ESPECÍFICO -->
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+        
+        <!-- Header mejorado -->
+        <div class="text-center mb-5 home-fade-in">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-pill px-4 py-2 mb-4">
+                <i class="bi bi-stars text-primary me-2"></i>
+                <span class="small fw-semibold">Análisis Inteligente de CV</span>
+            </div>
+            <h2 class="display-6 fw-bold mb-3">Optimiza tu currículum con IA</h2>
+            <p class="lead home-text-light-emphasis mb-4">
+                Sube tu CV y obtén un análisis detallado de compatibilidad ATS,<br>
+                sugerencias de mejora y puntuación profesional en segundos.
+            </p>
+        </div>
+
+        <!-- Alertas de error -->
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+                <div class="flex-grow-1">
+                    <h5 class="alert-heading mb-1">Error en el análisis</h5>
+                    <p class="mb-0">{{ error }}</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Tarjeta principal del formulario -->
+        <div class="card border-0 shadow-lg mb-5 home-fade-in">
+            <div class="card-header bg-dark-gradient py-4 border-0">
+                <div class="d-flex align-items-center">
+                    <div class="home-icon-wrapper bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-upload text-primary fs-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 fw-bold">Subir y Analizar CV</h4>
+                        <p class="home-text-light-emphasis mb-0">Formato soportado: PDF</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <!-- Formulario (manteniendo la estructura original) -->
+                <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="home-form-container">
+                        {{ form.as_p }}
+                    </div>
+                    
+                    <div class="text-center mt-4 pt-3 border-top border-secondary">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 fw-semibold">
+                            <i class="bi bi-magic me-2"></i> Analizar CV con IA
+                        </button>
+                        <p class="home-text-light-emphasis small mt-3 mb-0">
+                            <i class="bi bi-shield-check me-1"></i>
+                            Tu archivo se procesa de forma segura y privada
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sección de características -->
+        <div class="row g-4 mb-5 home-fade-in">
+            <div class="col-md-12 mb-4">
+                <h3 class="text-center fw-bold mb-1">Beneficios del análisis con IA</h3>
+                <p class="text-center home-text-light-emphasis">Obtén insights valiosos para mejorar tu CV</p>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border border-secondary border-opacity-25 bg-dark bg-opacity-50 home-hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="home-icon-wrapper bg-info bg-opacity-10 rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-search text-info fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Compatibilidad ATS</h5>
+                        <p class="home-text-light-emphasis">
+                            Detectamos problemas de formato que afectan la lectura por sistemas de seguimiento de candidatos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border border-secondary border-opacity-25 bg-dark bg-opacity-50 home-hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="home-icon-wrapper bg-success bg-opacity-10 rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-graph-up text-success fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Puntuación Detallada</h5>
+                        <p class="home-text-light-emphasis">
+                            Recibe una puntuación general y por secciones con métricas claras y comprensibles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border border-secondary border-opacity-25 bg-dark bg-opacity-50 home-hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="home-icon-wrapper bg-warning bg-opacity-10 rounded-circle p-3 d-inline-flex mb-3">
+                            <i class="bi bi-lightbulb text-warning fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Sugerencias Prácticas</h5>
+                        <p class="home-text-light-emphasis">
+                            Recomendaciones específicas y accionables para mejorar cada parte de tu currículum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información de formatos -->
+        <div class="card border border-secondary border-opacity-25 bg-dark bg-opacity-25 home-fade-in">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="fw-bold mb-2">
+                            <i class="bi bi-info-circle me-2"></i> Recomendaciones para mejores resultados
+                        </h5>
+                        <ul class="home-recommendations-list home-text-light-emphasis mb-0 ps-3">
+                            <li>Usa formato PDF para preservar el diseño</li>
+                            <li>Asegúrate de que el texto sea seleccionable (no imagen)</li>
+                            <li>Incluye palabras clave relevantes para tu industria</li>
+                            <li>Mantén el CV en 1-2 páginas para un análisis óptimo</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <div class="d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
+                            <span class="badge bg-dark bg-opacity-50 text-light py-2 px-3 border border-secondary border-opacity-25">
+                                <i class="bi bi-filetype-pdf me-1"></i> PDF
+                            </span>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> <!-- CIERRE DEL WRAPPER PRINCIPAL -->
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,183 @@
+/* static/css/home.css - Estilos ESPECÍFICOS para la página de inicio */
+
+/* NOTA: Todos los estilos aquí son específicos para home.html */
+/* No afectan a base.html u otras páginas */
+
+/* ========== ANIMACIONES ESPECÍFICAS ========== */
+@keyframes home-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.home-fade-in {
+    animation: home-fadeInUp 0.6s ease-out forwards;
+}
+
+/* ========== ESTILOS PARA LA PÁGINA DE INICIO ========== */
+/* Todos los selectores empiezan con .home-page o son muy específicos */
+
+/* Contenedor principal de home */
+.home-page .card-header.bg-dark-gradient {
+    background: linear-gradient(135deg, rgba(33, 37, 41, 0.95) 0%, rgba(52, 58, 64, 0.95) 100%) !important;
+    border-bottom: 1px solid rgba(108, 117, 125, 0.3) !important;
+}
+
+/* Icon wrapper - solo en home */
+.home-icon-wrapper {
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor del formulario - solo en home */
+.home-form-container {
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+/* Párrafos del formulario Django - solo en home */
+.home-form-container p {
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid rgba(108, 117, 125, 0.1) !important;
+}
+
+.home-form-container p:last-of-type {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+/* Labels mejorados - solo en home */
+.home-form-label {
+    display: block;
+    color: #e9ecef;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Input de archivo - solo en home */
+.home-page input[type="file"].form-control {
+    padding: 0.75rem !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 2px dashed rgba(108, 117, 125, 0.4) !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.home-page input[type="file"].form-control:hover {
+    border-color: #4361ee !important;
+    background-color: rgba(67, 97, 238, 0.05) !important;
+}
+
+.home-page input[type="file"].form-control::file-selector-button {
+    background-color: #4361ee !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 5px !important;
+    margin-right: 1rem !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.home-page input[type="file"].form-control::file-selector-button:hover {
+    background-color: #3a56d4 !important;
+}
+
+/* Efecto hover para tarjetas - solo en home */
+.home-hover-lift {
+    transition: all 0.3s ease;
+}
+
+.home-hover-lift:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    border-color: rgba(67, 97, 238, 0.3) !important;
+}
+
+/* Lista de recomendaciones - solo en home */
+.home-recommendations-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.home-recommendations-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.home-recommendations-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #06d6a0;
+    font-weight: bold;
+}
+
+/* Badges mejorados - solo en home */
+.home-page .badge {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.home-page .badge:hover {
+    transform: scale(1.05);
+}
+
+/* Estilos para textos con opacidad - solo en home */
+.home-text-light-emphasis {
+    color: rgba(248, 249, 250, 0.8) !important;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .home-page .display-6 {
+        font-size: 1.8rem !important;
+    }
+    
+    .home-page .lead {
+        font-size: 1rem !important;
+    }
+    
+    .home-page .card-body {
+        padding: 1.5rem !important;
+    }
+    
+    .home-form-container {
+        padding: 1rem !important;
+    }
+}
+
+/* Efecto de carga para el botón - solo en home */
+@keyframes home-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+    }
+}
+
+.home-page .btn-primary {
+    animation: home-pulse 2s infinite;
+}
+
+.home-page .btn-primary:disabled {
+    animation: none;
+    opacity: 0.8;
+}

@@ -1,0 +1,5 @@
+django
+google-generativeai
+django-environ
+PyPDF2
+reportlab
