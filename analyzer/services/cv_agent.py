@@ -22,7 +22,7 @@ class CVAnalyzerAgent:
         try:
             reader = PdfReader(pdf_path)
         except PdfReadError:
-            raise ValueError("❌ El archivo PDF está dañado o no es válido")
+            raise ValueError("El archivo PDF está dañado o no es válido")
 
         text = ""
 
@@ -77,7 +77,7 @@ Formato requerido:
         cv_text = self.extract_text_from_pdf(pdf_path)
 
         if not cv_text:
-            raise ValueError("❌ No se pudo extraer texto del CV")
+            raise ValueError("No se pudo extraer texto del CV")
 
         response = self.model.generate_content(
             self.build_prompt(cv_text, target_position)
@@ -86,7 +86,7 @@ Formato requerido:
         raw_text = (response.text or "").strip()
 
         if not raw_text:
-            raise ValueError("❌ Gemini no devolvió contenido")
+            raise ValueError("Gemini no devolvió contenido")
 
         cleaned_json = self._clean_json_response(raw_text)
 
@@ -94,7 +94,7 @@ Formato requerido:
             return json.loads(cleaned_json)
         except json.JSONDecodeError:
             raise ValueError(
-                "❌ La IA devolvió un formato inválido.\n\n"
+                " La IA devolvió un formato inválido.\n\n"
                 "Respuesta recibida:\n"
                 f"{raw_text}"
             )

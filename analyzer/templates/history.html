@@ -1,35 +1,236 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Historial | AI CV Analyzer{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/history.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="history-page"> <!-- WRAPPER PRINCIPAL ESPECÍFICO -->
+    <div class="container">
+        <!-- Encabezado del historial -->
+        <header class="history-header history-fade-in">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="history-header-title">📋 Historial de Análisis</h1>
+                    <p class="history-header-subtitle">
+                        Revisa, descarga o elimina tus análisis de CV anteriores
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Nuevo Análisis
+                    </a>
+                </div>
+            </div>
 
-<section class="container mt-5">
-  <h1 class="mb-4">Historial de Análisis</h1>
+            <!-- Estadísticas -->
+            {% if analyses %}
+            <div class="history-stats">
+                <div class="history-stat-card">
+                    <div class="history-stat-value">{{ analyses|length }}</div>
+                    <div class="history-stat-label">Total de análisis</div>
+                </div>
+                <div class="history-stat-card">
+                    <div class="history-stat-value">{{ analyses|length }}</div>
+                    <div class="history-stat-label">Este mes</div>
+                </div>
+                <div class="history-stat-card">
+                    <div class="history-stat-value">{{ unique_positions }}</div>
+                    <div class="history-stat-label">Puestos diferentes</div>
+                </div>
+            </div>
+            {% endif %}
+        </header>
 
-  {% if analyses %}
-    <div class="list-group">
-      {% for analysis in analyses %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <strong>{{ analysis.get_target_position_display }}</strong><br>
-            <small class="text-muted">{{ analysis.created_at }}</small>
-          </div>
-
-          <div class="btn-group">
-            <a href="{% url 'analysis_detail' analysis.id %}" class="btn btn-sm btn-outline-primary">
-              Ver
-            </a>
-            <a href="{% url 'download_summary' analysis.id %}" class="btn btn-sm btn-outline-success">
-              Descargar
-            </a>
-            <a href="{% url 'delete_analysis' analysis.id %}" class="btn btn-sm btn-outline-danger">
-              Eliminar
-            </a>
-          </div>
+        <!-- Filtros y búsqueda -->
+        {% if analyses %}
+        <div class="history-filters history-fade-in" style="animation-delay: 0.1s;">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="history-filter-group">
+                        <label class="history-filter-label">
+                            <i class="bi bi-search me-2"></i>Buscar análisis
+                        </label>
+                        <div class="history-search-box">
+                            <i class="bi bi-search history-search-icon"></i>
+                            <input type="text" 
+                                   class="history-search-input" 
+                                   placeholder="Buscar por puesto, fecha o palabras clave..."
+                                   id="historySearch">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="history-filter-group">
+                        <label class="history-filter-label">
+                            <i class="bi bi-filter me-2"></i>Ordenar por
+                        </label>
+                        <select class="history-filter-select" id="historySort">
+                            <option value="newest">Más recientes primero</option>
+                            <option value="oldest">Más antiguos primero</option>
+                            <option value="position">Por puesto (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="history-filter-group">
+                        <label class="history-filter-label">
+                            <i class="bi bi-calendar me-2"></i>Fecha
+                        </label>
+                        <select class="history-filter-select" id="historyDateFilter">
+                            <option value="all">Todas las fechas</option>
+                            <option value="today">Hoy</option>
+                            <option value="week">Esta semana</option>
+                            <option value="month">Este mes</option>
+                            <option value="year">Este año</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-muted">No hay análisis aún.</p>
-  {% endif %}
-</section>
+        {% endif %}
 
+        <!-- Lista de análisis -->
+<section class="history-fade-in" style="animation-delay: 0.2s;">
+    {% if analyses %}
+        <div class="history-analysis-list" id="historyList">
+            {% for analysis in analyses %}
+            <div class="history-analysis-item">
+                <div class="history-analysis-header">
+                    <div>
+                        <div class="history-analysis-title">
+                            Análisis #{{ forloop.counter }}
+                        </div>
+                        <div class="history-analysis-position">
+                            <i class="bi bi-briefcase"></i>
+                            {{ analysis.get_target_position_display|default:"Sin puesto especificado" }}
+                        </div>
+                    </div>
+                    <div class="history-analysis-date">
+                        <i class="bi bi-clock"></i>
+                        {{ analysis.created_at|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+
+                <div class="history-analysis-meta">
+                    <div class="history-analysis-meta-item">
+                        <i class="bi bi-calendar"></i>
+                        {{ analysis.created_at|date:"F j, Y" }}
+                    </div>
+                    <div class="history-analysis-meta-item">
+                        <i class="bi bi-clock-history"></i>
+                        {{ analysis.created_at|timesince }} atrás
+                    </div>
+                    {% if analysis.result_json.score %}
+                    <div class="history-analysis-meta-item">
+                        <i class="bi bi-star"></i>
+                        Puntuación: {{ analysis.result_json.score }}/100
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="history-analysis-actions">
+                    <a href="{% url 'analysis_detail' analysis.id %}" 
+                       class="history-action-btn view">
+                        <i class="bi bi-eye"></i>
+                        Ver Detalles
+                    </a>
+                    <a href="{% url 'download_summary' analysis.id %}" 
+                       class="history-action-btn download">
+                        <i class="bi bi-download"></i>
+                        Descargar PDF
+                    </a>
+                    <button class="history-action-btn delete" 
+                            data-analysis-id="{{ analysis.id }}"
+                            data-analysis-position="{{ analysis.get_target_position_display|default:'este análisis' }}">
+                        <i class="bi bi-trash"></i>
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+                <!-- Paginación (opcional) -->
+                {% if analyses.has_other_pages %}
+                <div class="history-pagination">
+                    {% if analyses.has_previous %}
+                    <a href="?page={{ analyses.previous_page_number }}" class="history-page-btn">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    {% endif %}
+
+                    {% for num in analyses.paginator.page_range %}
+                        {% if analyses.number == num %}
+                        <span class="history-page-btn active">{{ num }}</span>
+                        {% else %}
+                        <a href="?page={{ num }}" class="history-page-btn">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if analyses.has_next %}
+                    <a href="?page={{ analyses.next_page_number }}" class="history-page-btn">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            {% else %}
+                <!-- Estado vacío -->
+                <div class="history-empty-state history-fade-in">
+                    <div class="history-empty-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <h3 class="history-empty-title">No hay análisis aún</h3>
+                    <p class="history-empty-description">
+                        Aún no has realizado ningún análisis de CV. Comienza subiendo tu primer currículum 
+                        para obtener insights valiosos sobre cómo optimizarlo para sistemas ATS y reclutadores.
+                    </p>
+                    <a href="/" class="history-empty-cta">
+                        <i class="bi bi-plus-circle"></i>
+                        Realizar primer análisis
+                    </a>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+</div> <!-- CIERRE DEL WRAPPER PRINCIPAL -->
+
+<!-- Modal de confirmación para eliminar -->
+<div class="history-modal-overlay" id="deleteModal">
+    <div class="history-modal">
+        <div class="history-modal-header">
+            <div class="history-modal-icon">
+                <i class="bi bi-exclamation-triangle"></i>
+            </div>
+            <h4 class="history-modal-title">Confirmar eliminación</h4>
+        </div>
+        <div class="history-modal-body">
+            <p>¿Estás seguro de que quieres eliminar el análisis de <strong id="modalPosition"></strong>?</p>
+            <p class="text-light-emphasis small">
+                <i class="bi bi-info-circle me-1"></i>
+                Esta acción no se puede deshacer y perderás todos los datos de este análisis.
+            </p>
+        </div>
+        <div class="history-modal-actions">
+            <button class="history-modal-btn cancel" id="cancelDelete">
+                Cancelar
+            </button>
+            <button class="history-modal-btn confirm" id="confirmDelete">
+                Sí, eliminar
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    src='{% static "js/history.js" %}'
+</script>
 {% endblock %}
