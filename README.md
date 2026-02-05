@@ -64,8 +64,8 @@ Está pensada para **personas que buscan trabajo**, **reclutadores** y **desarro
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone https://github.com/solanomillo/ai-cv-analyzer.git
-cd ai-cv-analyzer
+git clone https://github.com/solanomillo/AI_CV_Analyzer.git
+cd AI_CV_Analyzer
 ```
 
 ### 2️⃣ Crear y activar entorno virtual
